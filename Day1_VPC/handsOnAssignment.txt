@@ -1,0 +1,104 @@
+# AWS VPC Networking – Simple Hands-on Lab
+
+## What this project covers
+
+* Connecting to **public and private EC2 instances**
+* Using **WSL (Ubuntu on Windows)** for SSH
+* Understanding **VPC networking basics**
+* Practicing **secure key management (.pem files)**
+
+---
+
+##  Overview
+
+* **VPC** with CIDR block
+* **Public Subnet**
+
+  * EC2 with public IP
+  * Internet Gateway attached
+* **Private Subnet**
+
+  * EC2 without public IP
+  * Accessible only via public EC2 (jump server)
+  ** Also covered Route tables,NAT Gateways,Elastic IP,IGW
+---
+
+## Used
+
+* Windows laptop
+* WSL (Ubuntu)
+* AWS EC2
+* SSH / SCP
+
+---
+
+## Key Steps Performed
+
+### 1. Set up WSL on Windows
+
+* Installed Ubuntu using WSL
+* Accessed Windows files via `/mnt/c/`
+
+### 2. Manage PEM Key Safely
+
+* Copied `.pem` file from Windows to WSL
+* Moved key to `~/.ssh/`
+* Fixed permissions:
+
+  * `chmod 400 Jan26.pem`
+
+### 3. Connect to Public EC2
+
+* Used SSH from WSL:
+
+  * `ssh -i ~/.ssh/Jan26.pem ec2-user@<public-ip>`
+* Verified successful login
+
+### 4. Connect to Private EC2 (via Public EC2)
+
+* Copied PEM key to public EC2 (jump server)
+* Fixed permissions on EC2
+* SSH from public EC2 to private EC2:
+
+  * `ssh -i Jan26.pem ec2-user@<private-ip>`
+
+---
+
+## Common Errors & Fixes
+
+* **Permission 0555 / bad permissions**
+
+  * Fix: `chmod 400 Jan26.pem`
+
+* **Identity file not accessible**
+
+  * Fix: Use correct path to `.pem` file
+
+* **Permission denied (publickey)**
+
+  * Fix:
+
+    * Correct username (`ec2-user`)
+    * Correct key
+    * Security group allows SSH
+
+---
+
+## What I Learned
+
+* Difference between **public vs private subnets**
+* How **jump servers (bastion hosts)** work
+* Why SSH key permissions are critical
+* How WSL simplifies AWS access from Windows
+
+---
+
+## Why this project matters
+
+* Demonstrates real-world AWS networking
+* Shows secure access to private resources
+* Useful for **Cloud / DevOps / SRE interviews**
+
+---
+
+ This repo proves hands-on understanding of AWS VPC, EC2, SSH, and secure networking.
